@@ -29,3 +29,7 @@ def create_app():
         return {'status': 'healthy'}, 200
 
     return app, celery
+# No final do app/__init__.py, antes do return, adiciona:
+from .api.workflow import ns as workflow_ns
+api.add_namespace(workflow_ns, path='/workflows')
+from .models import Workflow, WorkflowStep  # pra criar as tabelas
