@@ -1,0 +1,18 @@
+{
+  "info": {"name": "SmartFlow", "_postman_id": "uuid"},
+  "item": [
+    {
+      "name": "Start Workflow",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Authorization", "value": "Bearer eyJ..."}],
+        "body": {"mode": "raw", "raw": "{\"name\":\"proposal_approval\",\"payload\":{\"text\":\"Proposta R$500k\"}}"},
+        "url": "http://localhost:5000/workflows"
+      }
+    },
+    {
+      "name": "Health",
+      "request": {"method": "GET", "url": "http://localhost:5000/health"}
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+version: '3.8'
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    env_file: .env
+    depends_on:
+      - db
+      - redis
+      - broker
+  celery:
+    build: .
+    command: celery -A app.celery worker --loglevel=info
+    depends_on:
+      - web
+      - redis
+      - broker
+  beat:
+    build: .
+    command: celery -A app.celery beat --loglevel=info
+    depends_on:
+      - web
+      - redis
+      - broker
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: smartflow
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+    ports:
+      - "5432:5432"
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+  broker:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
